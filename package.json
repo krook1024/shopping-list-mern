@@ -1,0 +1,21 @@
+{
+  "name": "shopping-list-mern",
+  "version": "1.0.0",
+  "description": "Shooping list built with the MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "author": "Antal Albert Molnár",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.23"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
