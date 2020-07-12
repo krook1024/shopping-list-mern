@@ -19,14 +19,14 @@ class ShoppingList extends Component {
             <ListGroup>
                 <TransitionGroup className="shopping-list">
                     {
-                        this.props.item.items.map(({ id, name }) => (
-                            <CSSTransition key={name} timeout={500} classNames="fade">
+                        this.props.item.items.map(({ _id, name }) => (
+                            <CSSTransition key={_id} timeout={500} classNames="fade">
                                 <ListGroupItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span>{name}</span>
                                     <Button
                                         className="remove-btn"
                                         color="danger"
-                                        onClick={this.onDeleteClick.bind(this, id)}
+                                        onClick={this.onDeleteClick.bind(this, _id)}
                                     >
                                         &times;
                                     </Button>

@@ -12,7 +12,6 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addItem } from '../actions/itemActions';
-import { v4 } from 'uuid';
 
 class ItemModal extends Component {
     state = {
@@ -37,12 +36,7 @@ class ItemModal extends Component {
     onSubmit = e => {
         e.preventDefault();
 
-        const newItem = {
-            id: v4(),
-            name: this.state.name
-        }
-
-        this.props.addItem(newItem);
+        this.props.addItem(this.state.name);
 
         // Close the modal
         this.toggle();
