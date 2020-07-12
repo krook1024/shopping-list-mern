@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems, addItem, deleteItem } from '../actions/itemActions';
+import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
@@ -10,49 +10,32 @@ class ShoppingList extends Component {
         this.props.getItems();
     }
 
+    onDeleteClick = id => {
+        this.props.deleteItem(id);
+    }
+
     render() {
         return (
-            <Container className="my-3">
-                <Button
-                    color="dark"
-                    size="sm"
-                    className="mb-3"
-                    onClick={
-                        () => {
-                            const name = prompt('Enter item');
-                            if (name) {
-                                this.props.addItem({
-                                    name
-                                });
-                            }
-                        }
-                    }
-                >
-                    Add Item
-            </Button>
-                <ListGroup>
-                    <TransitionGroup className="shopping-list">
-                        {
-                            this.props.item.items.map(({ id, name }) => (
-                                <CSSTransition key={name} timeout={500} classNames="fade">
-                                    <ListGroupItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <span>{name}</span>
-                                        <Button
-                                            className="remove-btn"
-                                            color="danger"
-                                            onClick={() => {
-                                                this.props.deleteItem(id);
-                                            }}
-                                        >
-                                            &times;
+            <ListGroup>
+                <TransitionGroup className="shopping-list">
+                    {
+                        this.props.item.items.map(({ id, name }) => (
+                            <CSSTransition key={name} timeout={500} classNames="fade">
+                                <ListGroupItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span>{name}</span>
+                                    <Button
+                                        className="remove-btn"
+                                        color="danger"
+                                        onClick={this.onDeleteClick.bind(this, id)}
+                                    >
+                                        &times;
                                     </Button>
-                                    </ListGroupItem>
-                                </CSSTransition>
-                            ))
-                        }
-                    </TransitionGroup>
-                </ListGroup>
-            </Container>
+                                </ListGroupItem>
+                            </CSSTransition>
+                        ))
+                    }
+                </TransitionGroup>
+            </ListGroup>
         )
     }
 }
@@ -68,4 +51,4 @@ const mapStateToProps = state => ({
     item: state.item
 });
 
-export default connect(mapStateToProps, { getItems, addItem, deleteItem })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
