@@ -7,8 +7,11 @@ function auth(req, res, next) {
     // Check for token
     const token = req.header('x-auth-token');
 
-    if ( ! token) res.status(401).json({ message: 'No token, authorization failed.' });
-    
+    if (!token)
+        return res
+            .status(401)
+            .json({ message: 'No token, authorization failed.' });
+
     try {
         // Verify token
         const decoded = jwt.verify(token, config.get('jwtSecret'));
@@ -18,7 +21,9 @@ function auth(req, res, next) {
 
         next();
     } catch (e) {
-        res.status(400).json({ message: 'Bad token, authorization failed.' });
+        return res
+            .status(400)
+            .json({ message: 'Bad token, authorization failed.' });
     }
 }
 
