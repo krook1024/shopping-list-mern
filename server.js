@@ -12,12 +12,19 @@ const db = config.get('mongoURI');
 
 // Connect to Mongo
 try {
-    mongoose.connect(
-        db,
-        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-        () => console.log('MongoDB connected'))
+  mongoose.connect(
+    db,
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+    err => {
+      if (!err) {
+        console.log('MongoDB connected');
+      } else {
+        console.log(`MongoDB connection error: ${err.message}`);
+      }
+    }
+  );
 } catch (err) {
-    console.log(err);
+  console.log(err);
 }
 
 // Use routes
