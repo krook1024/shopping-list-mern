@@ -25,6 +25,9 @@ function AppNavbar(props) {
                 <NavbarToggler onClick={isOpenToggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav navbar>
+                        <NavItem>
+                            <NavLink href="/">Home</NavLink>
+                        </NavItem>
                         {props.auth.isAuthenticated ? (
                             <NavItem>
                                 <Logout />

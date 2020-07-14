@@ -24,13 +24,17 @@ function ShoppingList(props) {
                             }}
                         >
                             <span>{name}</span>
-                            <Button
-                                className="remove-btn"
-                                color="danger"
-                                onClick={() => props.deleteItem(_id)}
-                            >
-                                &times;
-                            </Button>
+                            {props.isAuthenticated ? (
+                                <Button
+                                    className="remove-btn"
+                                    color="danger"
+                                    onClick={() => props.deleteItem(_id)}
+                                >
+                                    &times;
+                                </Button>
+                            ) : (
+                                ''
+                            )}
                         </ListGroupItem>
                     </CSSTransition>
                 ))}
@@ -43,10 +47,12 @@ ShoppingList.propTypes = {
     getItems: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
     item: state.item,
+    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);

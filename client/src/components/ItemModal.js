@@ -35,9 +35,13 @@ function ItemModal(props) {
 
     return (
         <div>
-            <Button color="dark" className="mb-3" onClick={toggleModal}>
-                Add Item
-            </Button>
+            {props.isAuthenticated ? (
+                <Button color="dark" className="mb-3" onClick={toggleModal}>
+                    Add Item
+                </Button>
+            ) : (
+                ''
+            )}
 
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Add Item</ModalHeader>
@@ -59,10 +63,12 @@ function ItemModal(props) {
 
 ItemModal.propTypes = {
     addItem: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
     item: state.item,
+    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { addItem })(ItemModal);
