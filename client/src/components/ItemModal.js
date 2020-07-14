@@ -15,17 +15,19 @@ import useInput from '../util/useInput';
 import useToggle from '../util/useToggle';
 
 function ItemModal(props) {
-    const [name, nameInput] = useInput({
+    const [name, nameInput, setName] = useInput({
         type: 'text',
         placeholder: 'Add shopping item',
         id: 'item',
     });
-    const [modal, toggleModal] = useToggle();
+    const [modal, toggleModal] = useToggle({});
 
     const onSubmit = e => {
         e.preventDefault();
 
         props.addItem(name);
+
+        setName('');
 
         // Close the modal
         toggleModal();

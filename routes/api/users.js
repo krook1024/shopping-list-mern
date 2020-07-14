@@ -16,15 +16,15 @@ router.post('/', async (req, res, next) => {
     // Validation
     if (!name || !email || !password) {
         return res.status(400).json({
-            message: 'Please enter all fields.'
+            message: 'Please enter all fields.',
         });
     }
 
     // Check for existing
-    User.findOne({ email })
-        .then(user => {
-            if (user) return res.status(400).json({ message: 'User already exists!' });
-        });
+    User.findOne({ email }).then(user => {
+        if (user)
+            return res.status(400).json({ message: 'User already exists!' });
+    });
 
     const newUser = new User({ name, email, password });
 
@@ -38,25 +38,24 @@ router.post('/', async (req, res, next) => {
 
                 newUser.password = hash;
 
-                newUser.save()
-                    .then(user => {
-                        jwt.sign(
-                            { id: user._id },
-                            config.get('jwtSecret'),
-                            { expiresIn: 3600 },
-                            (err, token) => {
-                                if (err) throw err;
-                                res.json({
-                                    user: {
-                                        id: user.id,
-                                        name: user.name,
-                                        email: user.email,
-                                    },
-                                    token
-                                });
-                            }
-                        );
-                    });
+                newUser.save().then(user => {
+                    jwt.sign(
+                        { id: user._id },
+                        config.get('jwtSecret'),
+                        { expiresIn: 3600 },
+                        (err, token) => {
+                            if (err) throw err;
+                            res.json({
+                                user: {
+                                    id: user.id,
+                                    name: user.name,
+                                    email: user.email,
+                                },
+                                token,
+                            });
+                        }
+                    );
+                });
             });
         });
     } catch (err) {

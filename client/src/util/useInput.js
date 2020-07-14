@@ -12,5 +12,5 @@ export default function useInput({ type, placeholder = '', id = '' }) {
             id={id}
         />
     );
-    return [value, input];
+    return [value, input, setValue];
 }
